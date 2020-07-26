@@ -1,14 +1,18 @@
 import "package:flutter/material.dart";
 
-class NewTransaction extends StatelessWidget {
-  final titleController = TextEditingController();
-  final amountController = TextEditingController();
-
+class NewTransaction extends StatefulWidget {
   final Function addTX;
 
-  NewTransaction({
-    this.addTX,
-  });
+  NewTransaction({@required this.addTX});
+
+  @override
+  _NewTransactionState createState() => _NewTransactionState();
+}
+
+class _NewTransactionState extends State<NewTransaction> {
+  final titleController = TextEditingController();
+
+  final amountController = TextEditingController();
 
   void submitData() {
     final String enteredTitle = titleController.text;
@@ -19,10 +23,9 @@ class NewTransaction extends StatelessWidget {
       return;
     }
 
-    addTX(
-      enteredTitle,
-      enteredAmount,
-    );
+    widget.addTX(enteredTitle, enteredAmount);
+
+    Navigator.of(context).pop();
   }
 
   @override
@@ -52,9 +55,10 @@ class NewTransaction extends StatelessWidget {
                 // },
               ),
               FlatButton(
-                textColor: Colors.blueAccent,
+                textColor: Theme.of(context).primaryColorLight,
                 onPressed: submitData,
                 child: Text("Add Transaction"),
+                color: Theme.of(context).primaryColorDark,
               )
             ],
           ),
