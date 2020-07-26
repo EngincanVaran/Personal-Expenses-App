@@ -33,48 +33,29 @@ class TransactionList extends StatelessWidget {
           : ListView.builder(
               itemBuilder: (context, index) {
                 return Card(
-                  elevation: 10,
-                  child: Row(
-                    children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.symmetric(
-                          vertical: 8,
-                          horizontal: 10,
-                        ),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Theme.of(context).primaryColorDark,
-                            width: 2,
-                          ),
-                        ),
-                        padding: EdgeInsets.all(10),
-                        child: Text(
-                          transactions[index].amount.toStringAsFixed(2) + "₺",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w900,
-                            color: Theme.of(context).accentColor,
-                            fontSize: 20,
-                          ),
+                  elevation: 5,
+                  margin: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      radius: 30,
+                      child: Padding(
+                        padding: EdgeInsets.all(8),
+                        child: FittedBox(
+                          child:
+                              Text(transactions[index].amount.toString() + "₺"),
                         ),
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            transactions[index].title,
-                            // ignore: deprecated_member_use
-                            style: Theme.of(context).textTheme.title,
-                          ),
-                          Text(
-                            DateFormat('EEE, MMM d, ' 'yy')
-                                .format(transactions[index].date),
-                            style: TextStyle(
-                              color: Colors.blueGrey,
-                            ),
-                          ),
-                        ],
-                      )
-                    ],
+                    ),
+                    title: Text(
+                      transactions[index].title,
+                      // ignore: deprecated_member_use
+                      style: Theme.of(context).textTheme.title,
+                    ),
+                    subtitle: Text(
+                      DateFormat('EEE, MMM d, ' 'yy')
+                          .format(transactions[index].date),
+                    ),
+                    //trailing: ,
                   ),
                 );
               },
