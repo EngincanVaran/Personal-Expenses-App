@@ -5,9 +5,11 @@ import "../models/transaction.dart";
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> transactions;
+  final Function deleteTX;
 
   TransactionList({
     @required this.transactions,
+    @required this.deleteTX,
   });
 
   @override
@@ -37,6 +39,8 @@ class TransactionList extends StatelessWidget {
                   margin: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
                   child: ListTile(
                     leading: CircleAvatar(
+                      backgroundColor: Theme.of(context).primaryColorLight,
+                      foregroundColor: Theme.of(context).primaryColorDark,
                       radius: 30,
                       child: Padding(
                         padding: EdgeInsets.all(8),
@@ -55,7 +59,11 @@ class TransactionList extends StatelessWidget {
                       DateFormat('EEE, MMM d, ' 'yy')
                           .format(transactions[index].date),
                     ),
-                    //trailing: ,
+                    trailing: IconButton(
+                      onPressed: () => deleteTX(transactions[index].id),
+                      icon: Icon(Icons.delete),
+                      color: Theme.of(context).errorColor,
+                    ),
                   ),
                 );
               },

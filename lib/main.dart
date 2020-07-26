@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "Personal Expenses",
       theme: ThemeData(
+        //errorColor: Colors.red,
         primarySwatch: Colors.orange,
         accentColor: Colors.blue[900],
         fontFamily: "Quicksand",
@@ -59,15 +60,27 @@ class _MyHomePageState extends State<MyHomePage> {
     ),
     Transaction(
       id: 't2',
-      title: "Groceries",
-      amount: 150,
+      title: "New Bag",
+      amount: 79.99,
       date: DateTime.now(),
     ),
     Transaction(
       id: 't3',
-      title: "Macbook Air",
-      amount: 1250,
+      title: "New Phonecase",
+      amount: 20.5,
       date: DateTime.now(),
+    ),
+    Transaction(
+      id: 't4',
+      title: "Groceries",
+      amount: 420.25,
+      date: DateTime.now().subtract(Duration(days: 3)),
+    ),
+    Transaction(
+      id: 't5',
+      title: "Macbook Air",
+      amount: 1250.50,
+      date: DateTime.now().subtract(Duration(days: 5)),
     ),
   ];
 
@@ -78,12 +91,12 @@ class _MyHomePageState extends State<MyHomePage> {
       }).toList();
   }
 
-  void _addNewTransaction(String title, double amount) {
+  void _addNewTransaction(String title, double amount, DateTime chosenDate) {
     final newTX = Transaction(
       title: title,
       amount: amount,
-      date: DateTime.now(),
-      id: DateTime.now().toString() + amount.toString(),
+      date: chosenDate,
+      id: DateTime.now().toString(),
     );
 
     setState(() {
@@ -93,6 +106,12 @@ class _MyHomePageState extends State<MyHomePage> {
     print(
       "Debugger --> New TX is added! --> " + title + "-" + amount.toString(),
     );
+  }
+
+  void _deleteTransaction(String id) {
+    setState(() {
+      _userTransactions.removeWhere((tx) => tx.id == id);
+    });
   }
 
   void _startAddNewTransaction(BuildContext ctx) {
@@ -129,7 +148,10 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Chart(_recentTransactions),
-            TransactionList(transactions: _userTransactions),
+            TransactionList(
+              transactions: _userTransactions,
+              deleteTX: _deleteTransaction,
+            ),
           ],
         ),
       ),
