@@ -1,3 +1,7 @@
+import "dart:io";
+
+import 'package:Personal_Expenses_App/widgets/adaptive_flat_button.dart';
+import 'package:flutter/cupertino.dart';
 import "package:flutter/material.dart";
 import "package:intl/intl.dart";
 
@@ -52,58 +56,61 @@ class _NewTransactionState extends State<NewTransaction> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-        elevation: 5,
-        child: Container(
-          padding: EdgeInsets.all(10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: <Widget>[
-              TextField(
-                decoration: InputDecoration(labelText: "Title"),
-                keyboardType: TextInputType.text,
-                controller: _titleController,
-                onSubmitted: (_) => _submitData(),
-                // onChanged: (input) {
-                //   titleInput = input;
-                // },
-              ),
-              TextField(
-                decoration: InputDecoration(labelText: "Amount"),
-                keyboardType: TextInputType.number,
-                controller: _amountController,
-                onSubmitted: (_) => _submitData(),
-                // onChanged: (input) {
-                //   amountInput = input;
-                // },
-              ),
-              Container(
-                height: 70,
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: Text(_selectedDate == null
-                          ? "No Date Chosen!"
-                          : "Picked Date: " +
-                              DateFormat.yMEd().format(_selectedDate)),
-                    ),
-                    FlatButton(
-                      child: Text("Choose Date!",
-                          style: TextStyle(fontWeight: FontWeight.bold)),
-                      textColor: Theme.of(context).primaryColorDark,
-                      onPressed: _presentDatePicker,
-                    )
-                  ],
+    return SingleChildScrollView(
+      child: Card(
+          elevation: 5,
+          child: Container(
+            padding: EdgeInsets.only(
+              top: 10,
+              left: 10,
+              bottom: MediaQuery.of(context).viewInsets.bottom + 10,
+              right: 10,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget>[
+                TextField(
+                  decoration: InputDecoration(labelText: "Title"),
+                  keyboardType: TextInputType.text,
+                  controller: _titleController,
+                  onSubmitted: (_) => _submitData(),
+                  // onChanged: (input) {
+                  //   titleInput = input;
+                  // },
                 ),
-              ),
-              FlatButton(
-                textColor: Colors.white,
-                onPressed: _submitData,
-                child: Text("Add Transaction"),
-                color: Theme.of(context).primaryColorDark,
-              )
-            ],
-          ),
-        ));
+                TextField(
+                  decoration: InputDecoration(labelText: "Amount"),
+                  keyboardType: TextInputType.number,
+                  controller: _amountController,
+                  onSubmitted: (_) => _submitData(),
+                  // onChanged: (input) {
+                  //   amountInput = input;
+                  // },
+                ),
+                Container(
+                  height: 70,
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: Text(_selectedDate == null
+                            ? "No Date Chosen!"
+                            : "Picked Date: " +
+                                DateFormat.yMEd().format(_selectedDate)),
+                      ),
+                      AdaptiveFlatButton(
+                          handler: _presentDatePicker, text: "Choose Date")
+                    ],
+                  ),
+                ),
+                FlatButton(
+                  textColor: Colors.white,
+                  onPressed: _submitData,
+                  child: Text("Add Transaction"),
+                  color: Theme.of(context).primaryColorDark,
+                )
+              ],
+            ),
+          )),
+    );
   }
 }
